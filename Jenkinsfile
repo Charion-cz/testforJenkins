@@ -51,7 +51,6 @@ pipeline{
                 echo "打包"
                 // 检查Jenkins的docker命令是否能运行
                 sh 'docker version'
-                sh 'docker images'
             }
         }
     }
