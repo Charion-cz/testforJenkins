@@ -43,7 +43,7 @@ pipeline{
                sh 'pwd && ls -alh'
                sh 'mvn -v'
                // 打包
-               sh 'mvn clean package -Dmaven.test.skip=true -s "/var/jenkins_home/appconfig/maven/settings.xml" '
+               // sh 'mvn clean package -Dmaven.test.skip=true -s "/var/jenkins_home/appconfig/maven/settings.xml" '
             }
         }
 
