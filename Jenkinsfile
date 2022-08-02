@@ -9,6 +9,7 @@ pipeline{
     environment {
       key = "123456"
       user = "root"
+      WS = "${WORKSPACE}"
     }
 
     // 定义流水线的加工流程
@@ -38,7 +39,6 @@ pipeline{
                 }
             }
             steps {
-               echo "打包"
                // 当前在哪个文件夹，查看文件夹内容
                sh 'pwd && ls -alh'
                sh 'mvn -v'
@@ -51,9 +51,17 @@ pipeline{
             steps {
                 echo "打包"
                 // 检查Jenkins的docker命令是否能运行
-                sh 'docker version'
-                echo 'hello world'
+                sh 'pwd && ls -alh'
             }
+        }
+
+        stage('代码打包') {
+                    steps {
+                        echo "打包"
+                        // 检查Jenkins的docker命令是否能运行
+                        sh 'pwd && ls -alh'
+                        cd '${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
+                    }
         }
     }
 }
