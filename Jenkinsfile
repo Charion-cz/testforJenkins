@@ -63,5 +63,25 @@ pipeline{
                         sh 'cd ${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
                     }
         }
+
+        stage('生成镜像'){
+                    steps {
+                        echo "打包..."
+                        //检查Jenkins的docker命令是否能运行
+                        sh 'docker version'
+                        sh 'pwd && ls -alh'
+                        sh 'docker build -t java-devops-demo .'
+
+                    }
+        }
+
+        //4、部署
+                stage('部署'){
+                    steps {
+                        echo "部署..."
+                        sh 'docker rm -f java-devops-demo-dev'
+                        sh 'docker run -d -p 8888:8080 --name java-devops-demo-dev java-devops-demo'
+                    }
+        }
     }
 }
