@@ -60,7 +60,7 @@ pipeline{
                         echo "打包"
                         // 检查Jenkins的docker命令是否能运行
                         sh 'pwd && ls -alh'
-                        cd '${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
+                        sh 'cd ${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
                     }
         }
     }
