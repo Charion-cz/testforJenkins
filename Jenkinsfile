@@ -55,7 +55,7 @@ pipeline{
             }
         }
 
-        stage('代码打包') {
+        stage('打镜像') {
                     steps {
                         echo "打包"
                         // 检查Jenkins的docker命令是否能运行
