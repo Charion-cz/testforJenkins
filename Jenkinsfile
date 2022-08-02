@@ -42,8 +42,7 @@ pipeline{
                // 当前在哪个文件夹，查看文件夹内容
                sh 'pwd && ls -alh'
                sh 'mvn -v'
-               // 打包
-               sh 'mvn clean package -Dmaven.test.skip=true -s "/var/jenkins_home/appconfig/maven/settings.xml" '
+               sh 'cd ${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
             }
         }
 
@@ -53,15 +52,6 @@ pipeline{
                 // 检查Jenkins的docker命令是否能运行
                 sh 'pwd && ls -alh'
             }
-        }
-
-        stage('打镜像') {
-                    steps {
-                        echo "打包"
-                        // 检查Jenkins的docker命令是否能运行
-                        sh 'pwd && ls -alh'
-                        sh 'cd ${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
-                    }
         }
 
         stage('生成镜像'){
@@ -76,7 +66,7 @@ pipeline{
         }
 
         //4、部署
-                stage('部署'){
+         stage('部署'){
                     steps {
                         echo "部署..."
                         sh 'docker rm -f java-devops-demo-dev'
